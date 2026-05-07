@@ -1,21 +1,20 @@
-const agent = {
-  name: "Keith Guevara",
-  initials: "KG",
-  phone: "868-000-0000",
-  whatsapp: "18680000000",
+import { notFound } from "next/navigation";
+import { getAgentBySlug } from "@/lib/agents";
+
+type PageProps = {
+  params: Promise<{
+    slug: string;
+  }>;
 };
 
-const links = [
-  { title: "SBA Site", action: "Visit", url: "https://example.com/sba-site", icon: "🌐", type: "visit" },
-  { title: "Signup Site", action: "Visit", url: "https://example.com/signup-site", icon: "👤", type: "visit" },
-  { title: "Booking Engine", action: "Visit", url: "https://example.com/booking-engine", icon: "📅", type: "visit" },
-  { title: "Vortex Site", action: "Visit", url: "https://example.com/vortex-site", icon: "🌀", type: "visit" },
-  { title: "Biz Opp Video", action: "Watch", url: "https://example.com/biz-opp-video", icon: "▶", type: "watch" },
-  { title: "Comp Plan Video", action: "Watch", url: "https://example.com/comp-plan-video", icon: "📊", type: "watch" },
-  { title: "Powerline Video", action: "Watch", url: "https://example.com/powerline-video", icon: "⚡", type: "watch" },
-];
+export default async function AgentPage({ params }: PageProps) {
+  const { slug } = await params;
+  const agent = getAgentBySlug(slug);
 
-export default function DemoAgentPage() {
+  if (!agent) {
+    notFound();
+  }
+
   return (
     <main className="min-h-screen bg-[#020816] px-4 py-6 text-white">
       <div className="mx-auto max-w-[430px]">
@@ -25,14 +24,17 @@ export default function DemoAgentPage() {
 
           {/* logo + stars + plane */}
           <div className="pointer-events-none absolute inset-x-0 top-0 h-[360px] overflow-hidden">
-            <div className="absolute left-6 top-24 text-yellow-200/80 text-sm">✦</div>
-            <div className="absolute right-12 top-44 text-yellow-200/70 text-sm">✦</div>
+            <div className="absolute left-6 top-24 text-sm text-yellow-200/80">
+              ✦
+            </div>
+            <div className="absolute right-12 top-44 text-sm text-yellow-200/70">
+              ✦
+            </div>
             <div className="absolute right-8 top-14 text-[28px] text-yellow-300 drop-shadow-[0_0_12px_rgba(250,204,21,0.55)]">
               ✈
             </div>
             <div className="absolute right-[56px] top-[66px] h-40 w-28 rotate-[28deg] rounded-full border-r border-dashed border-yellow-300/70" />
 
-            {/* imported globe image */}
             <img
               src="/globe-arc.png"
               alt=""
@@ -40,8 +42,7 @@ export default function DemoAgentPage() {
             />
           </div>
 
-          {/* content */}
-          <div className="relative px-6 pt-7 pb-6">
+          <div className="relative px-6 pb-6 pt-7">
             {/* logo */}
             <img
               src="/surge-logo.png"
@@ -95,7 +96,7 @@ export default function DemoAgentPage() {
 
             {/* link cards */}
             <div className="mt-5 space-y-3">
-              {links.map((link, index) => (
+              {agent.links.map((link, index) => (
                 <a
                   key={link.title}
                   href={link.url}
@@ -160,7 +161,6 @@ export default function DemoAgentPage() {
               </a>
             </div>
 
-            {/* footer */}
             <div className="mt-6 flex items-center justify-center gap-2 text-xs text-slate-500">
               <span>Powered by</span>
               <span className="font-semibold text-cyan-300">surge365</span>
