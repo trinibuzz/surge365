@@ -6,60 +6,114 @@ const agent = {
 };
 
 const links = [
-  { title: "SBA Site", action: "Visit", url: "https://example.com/sba-site", icon: "🌐", type: "visit" },
-  { title: "Signup Site", action: "Visit", url: "https://example.com/signup-site", icon: "👤", type: "visit" },
-  { title: "Booking Engine", action: "Visit", url: "https://example.com/booking-engine", icon: "📅", type: "visit" },
-  { title: "Vortex Site", action: "Visit", url: "https://example.com/vortex-site", icon: "🌀", type: "visit" },
-  { title: "Biz Opp Video", action: "Watch", url: "https://example.com/biz-opp-video", icon: "▶", type: "watch" },
-  { title: "Comp Plan Video", action: "Watch", url: "https://example.com/comp-plan-video", icon: "📊", type: "watch" },
-  { title: "Powerline Video", action: "Watch", url: "https://example.com/powerline-video", icon: "⚡", type: "watch" },
+  {
+    title: "SBA Site",
+    action: "Visit",
+    url: "https://example.com/sba-site",
+    icon: "🌐",
+    type: "visit",
+  },
+  {
+    title: "Signup Site",
+    action: "Visit",
+    url: "https://example.com/signup-site",
+    icon: "👤",
+    type: "visit",
+  },
+  {
+    title: "Booking Engine",
+    action: "Visit",
+    url: "https://example.com/booking-engine",
+    icon: "✈",
+    type: "visit",
+  },
+  {
+    title: "Vortex Site",
+    action: "Visit",
+    url: "https://example.com/vortex-site",
+    icon: "🌀",
+    type: "visit",
+  },
+  {
+    title: "Biz Opp Video",
+    action: "Watch",
+    url: "https://example.com/biz-opp-video",
+    icon: "▶",
+    type: "watch",
+  },
+  {
+    title: "Comp Plan Video",
+    action: "Watch",
+    url: "https://example.com/comp-plan-video",
+    icon: "▥",
+    type: "watch",
+  },
+  {
+    title: "Powerline Video",
+    action: "Watch",
+    url: "https://example.com/powerline-video",
+    icon: "⚡",
+    type: "watch",
+  },
 ];
 
 export default function DemoAgentPage() {
   return (
-    <main className="min-h-screen bg-[#020816] px-4 py-6 text-white">
-      <div className="mx-auto max-w-[430px]">
-        <div className="relative overflow-hidden rounded-[2.2rem] border border-white/10 bg-[#041223] shadow-[0_0_50px_rgba(0,0,0,0.45)]">
-          {/* top background */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.16),_transparent_35%),linear-gradient(180deg,_#041223_0%,_#07182c_38%,_#05101f_100%)]" />
+    <main className="min-h-screen overflow-hidden bg-[#020816] px-4 py-6 text-white">
+      <div className="pointer-events-none fixed inset-0 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(28,213,255,0.18),_transparent_34%),radial-gradient(circle_at_bottom_right,_rgba(247,190,60,0.11),_transparent_36%),linear-gradient(180deg,_#020816_0%,_#04152a_48%,_#020816_100%)]" />
+        <div className="absolute left-1/2 top-[-170px] h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-cyan-400/10 blur-3xl" />
+        <div className="absolute bottom-[-160px] right-[-130px] h-[360px] w-[360px] rounded-full bg-yellow-300/10 blur-3xl" />
+      </div>
 
-          {/* logo + stars + plane */}
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-[360px] overflow-hidden">
-            <div className="absolute left-6 top-24 text-yellow-200/80 text-sm">✦</div>
-            <div className="absolute right-12 top-44 text-yellow-200/70 text-sm">✦</div>
-            <div className="absolute right-8 top-14 text-[28px] text-yellow-300 drop-shadow-[0_0_12px_rgba(250,204,21,0.55)]">
-              ✈
-            </div>
-            <div className="absolute right-[56px] top-[66px] h-40 w-28 rotate-[28deg] rounded-full border-r border-dashed border-yellow-300/70" />
+      <section className="relative mx-auto max-w-[430px]">
+        <div className="relative overflow-hidden rounded-[2.35rem] border border-white/10 bg-[#041223] shadow-[0_0_65px_rgba(28,213,255,0.16)]">
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,_rgba(6,28,50,0.95)_0%,_rgba(4,18,35,0.98)_42%,_rgba(2,10,22,1)_100%)]" />
 
-            {/* imported globe image */}
+          {/* Top decorative globe and travel details */}
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-[385px] overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-cyan-300/13 to-transparent" />
+
             <img
               src="/globe-arc.png"
               alt=""
-              className="absolute left-1/2 top-[120px] w-[610px] max-w-none -translate-x-1/2 opacity-90"
+              className="absolute left-1/2 top-[108px] w-[640px] max-w-none -translate-x-1/2 opacity-95 drop-shadow-[0_0_35px_rgba(28,213,255,0.28)]"
             />
+
+            <div className="absolute left-5 top-[112px] text-sm text-yellow-200/80 drop-shadow-[0_0_10px_rgba(250,204,21,0.55)]">
+              ✦
+            </div>
+
+            <div className="absolute right-14 top-[176px] text-sm text-yellow-200/65 drop-shadow-[0_0_10px_rgba(250,204,21,0.45)]">
+              ✦
+            </div>
+
+            <div className="absolute right-7 top-14 text-[28px] text-yellow-300 drop-shadow-[0_0_13px_rgba(250,204,21,0.65)]">
+              ✈
+            </div>
+
+            <div className="absolute right-[55px] top-[66px] h-40 w-28 rotate-[28deg] rounded-full border-r border-dashed border-yellow-300/70" />
           </div>
 
-          {/* content */}
-          <div className="relative px-6 pt-7 pb-6">
-            {/* logo */}
+          <div className="relative px-6 pb-6 pt-7">
+            {/* Logo */}
             <img
               src="/surge-logo.png"
               alt="Surge Three Sixty Five"
-              className="mx-auto h-[72px] w-auto object-contain drop-shadow-[0_0_22px_rgba(34,211,238,0.45)]"
+              className="mx-auto h-[76px] w-auto object-contain drop-shadow-[0_0_24px_rgba(28,213,255,0.50)]"
             />
 
-            {/* agent header */}
+            {/* Agent header */}
             <div className="mt-6 text-center">
-              <div className="mx-auto flex h-[98px] w-[98px] items-center justify-center rounded-full border border-cyan-300/60 bg-[radial-gradient(circle,_rgba(15,23,42,0.2)_0%,_rgba(8,18,35,0.85)_55%,_rgba(2,8,23,1)_100%)] text-[2.3rem] font-semibold text-yellow-200 shadow-[0_0_24px_rgba(34,211,238,0.45)] ring-4 ring-cyan-300/12">
+              <div className="mx-auto flex h-[102px] w-[102px] items-center justify-center rounded-full border border-cyan-300/60 bg-[radial-gradient(circle,_rgba(247,190,60,0.18)_0%,_rgba(28,213,255,0.14)_42%,_rgba(2,8,23,0.98)_76%)] text-[2.35rem] font-medium tracking-tight text-yellow-200 shadow-[0_0_28px_rgba(28,213,255,0.50)] ring-4 ring-cyan-300/10">
                 {agent.initials}
               </div>
 
-              <h1 className="mt-5 text-[2rem] font-semibold tracking-tight text-white">
+              <h1 className="mt-5 text-[2rem] font-medium leading-none tracking-tight text-white drop-shadow-[0_0_16px_rgba(28,213,255,0.18)]">
                 {agent.name}
               </h1>
 
-              <div className="mx-auto mt-3 flex max-w-[310px] items-center justify-center gap-3">
+              <div className="mx-auto mt-3 flex max-w-[315px] items-center justify-center gap-3">
                 <div className="h-px flex-1 bg-gradient-to-r from-transparent to-yellow-300/70" />
                 <p className="whitespace-nowrap text-[11px] font-medium uppercase tracking-[0.22em] text-cyan-300">
                   surge365 Travel Agent
@@ -69,31 +123,31 @@ export default function DemoAgentPage() {
 
               <a
                 href={`tel:${agent.phone}`}
-                className="mt-4 inline-flex items-center justify-center rounded-full border border-cyan-300/40 bg-[#0b2742] px-5 py-2 text-sm font-medium text-cyan-50 shadow-[0_0_18px_rgba(34,211,238,0.18)]"
+                className="mt-4 inline-flex items-center justify-center rounded-full border border-cyan-300/36 bg-[#09263f]/90 px-5 py-2 text-sm font-medium text-cyan-50 shadow-[0_0_18px_rgba(28,213,255,0.18)]"
               >
                 📞 Tel: {agent.phone}
               </a>
             </div>
 
-            {/* intro card */}
-            <div className="mt-5 rounded-[1.5rem] border border-cyan-300/30 bg-[linear-gradient(135deg,rgba(7,35,58,0.95),rgba(4,20,38,0.92))] p-4 shadow-[0_0_24px_rgba(34,211,238,0.10)]">
+            {/* Intro card */}
+            <div className="mt-5 rounded-[1.5rem] border border-cyan-300/24 bg-[linear-gradient(135deg,rgba(7,35,58,0.95),rgba(4,20,38,0.94))] p-4 shadow-[0_0_26px_rgba(28,213,255,0.10)]">
               <div className="flex items-center gap-4">
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-cyan-300/20 bg-[#06233a] text-3xl">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-cyan-300/18 bg-[#06233a] text-3xl shadow-[inset_0_0_15px_rgba(28,213,255,0.08)]">
                   🧳
                 </div>
 
                 <div>
-                  <h2 className="text-[1.45rem] font-semibold leading-tight text-white">
-                    Your travel. Your freedom. Your future.
+                  <h2 className="text-[1.35rem] font-medium leading-tight text-white">
+                    Your travel. Your freedom.
                   </h2>
                   <p className="mt-1 text-sm leading-6 text-slate-300">
-                    Access my official travel sites and videos below.
+                    Access my official surge365 sites and videos below.
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* link cards */}
+            {/* Link cards */}
             <div className="mt-5 space-y-3">
               {links.map((link, index) => (
                 <a
@@ -101,29 +155,30 @@ export default function DemoAgentPage() {
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-3 rounded-[1.35rem] border border-cyan-300/16 bg-[#061a2e] px-3.5 py-3.5 transition hover:border-cyan-300/32 hover:bg-[#08213a]"
+                  className="group flex items-center gap-3 rounded-[1.35rem] border border-cyan-300/14 bg-[#061a2e]/95 px-3.5 py-3.5 shadow-[0_14px_28px_rgba(0,0,0,0.22)] transition hover:-translate-y-0.5 hover:border-cyan-300/32 hover:bg-[#08213a]"
                 >
                   <div
-                    className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border text-[1.3rem] ${
+                    className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border text-[1.22rem] ${
                       link.type === "watch"
-                        ? "border-purple-300/30 bg-purple-400/10"
-                        : "border-cyan-300/28 bg-cyan-300/10"
+                        ? "border-purple-300/30 bg-purple-400/12 text-purple-100"
+                        : "border-cyan-300/28 bg-cyan-300/10 text-cyan-100"
                     }`}
                   >
                     {link.icon}
                   </div>
 
                   <div className="min-w-0 flex-1">
-                    <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-cyan-200/70">
+                    <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-cyan-200/65">
                       {String(index + 1).padStart(2, "0")}
                     </p>
-                    <h3 className="mt-0.5 text-[1.02rem] font-semibold leading-tight text-white">
+
+                    <h3 className="mt-0.5 text-[1.03rem] font-medium leading-tight text-white">
                       {link.title}
                     </h3>
                   </div>
 
                   <div
-                    className={`shrink-0 rounded-xl px-4 py-2 text-sm font-semibold ${
+                    className={`shrink-0 rounded-xl px-3.5 py-2 text-[13px] font-semibold ${
                       link.type === "watch"
                         ? "bg-[#6b46ff] text-white shadow-[0_0_16px_rgba(107,70,255,0.38)]"
                         : "bg-[#27d7ff] text-[#022033] shadow-[0_0_16px_rgba(39,215,255,0.36)]"
@@ -135,13 +190,13 @@ export default function DemoAgentPage() {
               ))}
             </div>
 
-            {/* bottom buttons */}
+            {/* Contact buttons */}
             <div className="mt-5 grid grid-cols-2 gap-3">
               <a
                 href={`tel:${agent.phone}`}
-                className="rounded-[1.35rem] bg-[linear-gradient(180deg,#0fa9db,#087fa8)] px-4 py-4 text-center text-white shadow-[0_0_20px_rgba(15,169,219,0.28)]"
+                className="rounded-[1.35rem] bg-[linear-gradient(180deg,#10a9dc,#087fa8)] px-4 py-4 text-center text-white shadow-[0_0_20px_rgba(15,169,219,0.28)] transition hover:scale-[1.01]"
               >
-                <span className="block text-lg font-semibold">Call</span>
+                <span className="block text-lg font-medium">Call</span>
                 <span className="mt-1 block text-xs font-medium text-cyan-100/90">
                   {agent.phone}
                 </span>
@@ -151,23 +206,22 @@ export default function DemoAgentPage() {
                 href={`https://wa.me/${agent.whatsapp}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-[1.35rem] bg-[linear-gradient(180deg,#37c95d,#239946)] px-4 py-4 text-center text-white shadow-[0_0_20px_rgba(55,201,93,0.30)]"
+                className="rounded-[1.35rem] bg-[linear-gradient(180deg,#37c95d,#239946)] px-4 py-4 text-center text-white shadow-[0_0_20px_rgba(55,201,93,0.30)] transition hover:scale-[1.01]"
               >
-                <span className="block text-lg font-semibold">WhatsApp</span>
+                <span className="block text-lg font-medium">WhatsApp</span>
                 <span className="mt-1 block text-xs font-medium text-green-50/90">
                   Chat with me
                 </span>
               </a>
             </div>
 
-            {/* footer */}
             <div className="mt-6 flex items-center justify-center gap-2 text-xs text-slate-500">
               <span>Powered by</span>
-              <span className="font-semibold text-cyan-300">surge365</span>
+              <span className="font-medium text-cyan-300">surge365</span>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </main>
   );
 }
