@@ -1,140 +1,35 @@
-export type AgentLink = {
-  title: string;
-  action: "Visit" | "Watch";
-  url: string;
-  icon: string;
-  type: "visit" | "watch";
-};
+import { db } from "./db";
 
 export type Agent = {
+  id: number;
   slug: string;
-  name: string;
-  initials: string;
-  phone: string;
-  whatsapp: string;
-  links: AgentLink[];
+  display_name: string;
+  initials: string | null;
+  phone: string | null;
+  whatsapp: string | null;
+  sba_site_url: string | null;
+  signup_site_url: string | null;
+  booking_engine_url: string | null;
+  vortex_site_url: string | null;
+  biz_opp_video_url: string | null;
+  comp_plan_video_url: string | null;
+  powerline_video_url: string | null;
+  is_active: number | boolean;
 };
 
-export const agents: Agent[] = [
-  {
-    slug: "keith",
-    name: "Keith Guevara",
-    initials: "KG",
-    phone: "868-000-0000",
-    whatsapp: "18680000000",
-    links: [
-      {
-        title: "SBA Site",
-        action: "Visit",
-        url: "https://example.com/sba-site",
-        icon: "🌐",
-        type: "visit",
-      },
-      {
-        title: "Signup Site",
-        action: "Visit",
-        url: "https://example.com/signup-site",
-        icon: "👤",
-        type: "visit",
-      },
-      {
-        title: "Booking Engine",
-        action: "Visit",
-        url: "https://example.com/booking-engine",
-        icon: "📅",
-        type: "visit",
-      },
-      {
-        title: "Vortex Site",
-        action: "Visit",
-        url: "https://example.com/vortex-site",
-        icon: "🌀",
-        type: "visit",
-      },
-      {
-        title: "Biz Opp Video",
-        action: "Watch",
-        url: "https://example.com/biz-opp-video",
-        icon: "▶",
-        type: "watch",
-      },
-      {
-        title: "Comp Plan Video",
-        action: "Watch",
-        url: "https://example.com/comp-plan-video",
-        icon: "📊",
-        type: "watch",
-      },
-      {
-        title: "Powerline Video",
-        action: "Watch",
-        url: "https://example.com/powerline-video",
-        icon: "⚡",
-        type: "watch",
-      },
-    ],
-  },
+export async function getAgentBySlug(slug: string) {
+  const [rows] = await db.query(
+    `
+    SELECT *
+    FROM agents
+    WHERE slug = ?
+    AND is_active = TRUE
+    LIMIT 1
+    `,
+    [slug]
+  );
 
-  {
-    slug: "demo",
-    name: "Demo Agent",
-    initials: "DA",
-    phone: "868-000-0000",
-    whatsapp: "18680000000",
-    links: [
-      {
-        title: "SBA Site",
-        action: "Visit",
-        url: "https://example.com/sba-site",
-        icon: "🌐",
-        type: "visit",
-      },
-      {
-        title: "Signup Site",
-        action: "Visit",
-        url: "https://example.com/signup-site",
-        icon: "👤",
-        type: "visit",
-      },
-      {
-        title: "Booking Engine",
-        action: "Visit",
-        url: "https://example.com/booking-engine",
-        icon: "📅",
-        type: "visit",
-      },
-      {
-        title: "Vortex Site",
-        action: "Visit",
-        url: "https://example.com/vortex-site",
-        icon: "🌀",
-        type: "visit",
-      },
-      {
-        title: "Biz Opp Video",
-        action: "Watch",
-        url: "https://example.com/biz-opp-video",
-        icon: "▶",
-        type: "watch",
-      },
-      {
-        title: "Comp Plan Video",
-        action: "Watch",
-        url: "https://example.com/comp-plan-video",
-        icon: "📊",
-        type: "watch",
-      },
-      {
-        title: "Powerline Video",
-        action: "Watch",
-        url: "https://example.com/powerline-video",
-        icon: "⚡",
-        type: "watch",
-      },
-    ],
-  },
-];
+  const agents = rows as Agent[];
 
-export function getAgentBySlug(slug: string) {
-  return agents.find((agent) => agent.slug === slug);
+  return agents[0] || null;
 }
