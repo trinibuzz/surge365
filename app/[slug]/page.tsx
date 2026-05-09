@@ -1,6 +1,5 @@
 export const runtime = "nodejs";
 
-export const runtime = "nodejs";
 
 import { notFound } from "next/navigation";
 import { getAgentBySlug } from "@/lib/agents";
@@ -27,7 +26,7 @@ export default async function AgentPage({ params }: PageProps) {
     notFound();
   }
 
-  const links: LinkItem[] = [
+  const links = [
     {
       title: "SBA Site",
       action: "Visit",
@@ -77,7 +76,7 @@ export default async function AgentPage({ params }: PageProps) {
       icon: "⚡",
       type: "watch",
     },
-  ].filter((link) => link.url);
+  ].filter((link): link is LinkItem => Boolean(link.url));
 
   const phone = agent.phone || "";
   const whatsapp = agent.whatsapp || "";
