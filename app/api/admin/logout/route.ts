@@ -3,16 +3,29 @@ import { adminCookieName } from "@/lib/adminAuth";
 
 export const runtime = "nodejs";
 
+function getBaseUrl(request: Request) {
+  const host =
+    request.headers.get("x-forwarded-host") || request.headers.get("host");
+
+  const protocol =
+    request.headers.get("x-forwarded-proto") ||
+    (host?.includes("localhost") ? "http" : "https");
+
+  return `${protocol}://${host}`;
+}
+
 export async function POST(request: Request) {
-  const response = NextResponse.redirect(new URL("/admin/login", request.url));
+  const baseUrl = getBaseUrl(request);
+
+  const response = NextResponse.redirect(`${baseUrl}/admin/login`);
 
   response.cookies.set(adminCookieName, "", {
     httpOnly: true,
     sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    secure: true,
     path: "/",
     maxAge: 0,
   });
 
   return response;
-}
+}}
