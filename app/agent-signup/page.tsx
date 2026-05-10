@@ -66,7 +66,6 @@ export default async function AgentSignupPage({
   const createdSlug = params.created || "";
 
   const validKey = process.env.AGENT_FORM_KEY;
-
   const isAllowed = Boolean(validKey) && key === validKey;
 
   async function submitAgentForm(formData: FormData) {
@@ -83,13 +82,16 @@ export default async function AgentSignupPage({
     const rawSlug = String(formData.get("slug") || "").trim();
 
     const slug = makeSlug(rawSlug || displayName);
-    const initials =
+
+    // This still saves into the existing "initials" column,
+    // but the form displays it as Travel Company Name.
+    const travelCompanyName =
       String(formData.get("initials") || "").trim() || makeInitials(displayName);
 
     await createAgent({
       slug,
       display_name: displayName,
-      initials,
+      initials: travelCompanyName,
       phone: String(formData.get("phone") || "").trim(),
       whatsapp: String(formData.get("whatsapp") || "").trim(),
       sba_site_url: String(formData.get("sba_site_url") || "").trim(),
@@ -115,7 +117,9 @@ export default async function AgentSignupPage({
             className="mx-auto h-20 w-auto object-contain drop-shadow-[0_0_24px_rgba(28,213,255,0.45)]"
           />
 
-          <h1 className="mt-6 text-3xl font-semibold">Private Form</h1>
+          <h1 className="mt-6 text-3xl font-semibold tracking-tight">
+            Private Form
+          </h1>
 
           <p className="mt-3 text-sm leading-6 text-slate-300">
             This agent signup form requires a private access key.
@@ -127,23 +131,28 @@ export default async function AgentSignupPage({
 
   return (
     <main className="min-h-screen bg-[#010714] px-4 py-8 text-white">
-      <section className="mx-auto max-w-4xl">
-        <div className="rounded-[2rem] border border-cyan-300/15 bg-[#061a2e] p-6 shadow-[0_0_50px_rgba(28,213,255,0.12)]">
-          <div className="text-center">
-            <img
-              src="/surge-logo.png"
-              alt="Surge Three Sixty Five"
-              className="mx-auto h-20 w-auto object-contain drop-shadow-[0_0_24px_rgba(28,213,255,0.45)]"
-            />
+      <section className="mx-auto max-w-5xl">
+        {/* Header card */}
+        <div className="relative overflow-hidden rounded-[2rem] border border-cyan-300/15 bg-[#061a2e] p-6 shadow-[0_0_50px_rgba(28,213,255,0.12)]">
+          <div className="pointer-events-none absolute left-1/2 top-[-90px] h-56 w-56 -translate-x-1/2 rounded-full bg-cyan-300/10 blur-3xl" />
 
-            <h1 className="mt-6 text-3xl font-semibold">
-              surge365 Agent Information Form
+          <div className="relative text-center">
+            <div className="mx-auto flex h-28 w-28 items-center justify-center rounded-full border border-cyan-300/20 bg-black/25 shadow-[0_0_30px_rgba(28,213,255,0.18)]">
+              <img
+                src="/surge-logo.png"
+                alt="Surge Three Sixty Five"
+                className="h-16 w-auto object-contain drop-shadow-[0_0_22px_rgba(28,213,255,0.45)]"
+              />
+            </div>
+
+            <h1 className="mt-6 text-3xl font-semibold tracking-tight md:text-4xl">
+              Agent Information Form
             </h1>
 
             <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-slate-300">
-              Fill out the information below to create your surge365 tap-card
-              landing page. Once submitted, your page will be created and can be
-              updated by the admin if needed.
+              Fill out the information below to create your tap-card landing
+              page. Once submitted, your page will be created and can be updated
+              by the admin if needed.
             </p>
           </div>
         </div>
@@ -175,44 +184,51 @@ export default async function AgentSignupPage({
         >
           <input type="hidden" name="key" value={key} />
 
-          <div className="grid gap-5 md:grid-cols-2">
-            <Field
-              label="Full Name"
-              name="display_name"
-              placeholder="Example: Maria Joseph"
-              required
-            />
+          <div className="rounded-[1.5rem] border border-cyan-300/10 bg-black/15 p-5">
+            <h2 className="text-xl font-semibold">Agent Details</h2>
+            <p className="mt-1 text-sm text-slate-400">
+              This information appears at the top of the agent page.
+            </p>
 
-            <Field
-              label="Page Name / Slug"
-              name="slug"
-              placeholder="Example: maria"
-            />
+            <div className="mt-5 grid gap-5 md:grid-cols-2">
+              <Field
+                label="Full Name"
+                name="display_name"
+                placeholder="Example: Maria Joseph"
+                required
+              />
 
-            <Field
-              label="Initials"
-              name="initials"
-              placeholder="Example: MJ"
-            />
+              <Field
+                label="Page Name / Slug"
+                name="slug"
+                placeholder="Example: maria"
+              />
 
-            <Field
-              label="Phone Number"
-              name="phone"
-              placeholder="Example: 868-000-0000"
-            />
+              <Field
+                label="Travel Company Name"
+                name="initials"
+                placeholder="Example: NPSTravel"
+              />
 
-            <Field
-              label="WhatsApp Number"
-              name="whatsapp"
-              placeholder="Example: 18680000000"
-            />
+              <Field
+                label="Phone Number"
+                name="phone"
+                placeholder="Example: 868-000-0000"
+              />
+
+              <Field
+                label="WhatsApp Number"
+                name="whatsapp"
+                placeholder="Example: 18680000000"
+              />
+            </div>
           </div>
 
-          <div className="mt-8 border-t border-white/10 pt-6">
-            <h2 className="text-xl font-semibold">surge365 Links</h2>
+          <div className="mt-6 rounded-[1.5rem] border border-cyan-300/10 bg-black/15 p-5">
+            <h2 className="text-xl font-semibold">Travel Links</h2>
 
             <p className="mt-1 text-sm text-slate-400">
-              Paste the official links you want displayed on your tap-card page.
+              Paste the official links you want displayed on the tap-card page.
             </p>
 
             <div className="mt-5 grid gap-5">
@@ -267,15 +283,15 @@ export default async function AgentSignupPage({
             </div>
           </div>
 
-          <div className="mt-8 flex flex-col gap-3 md:flex-row">
+          <div className="mt-8 flex flex-col items-start gap-3 md:flex-row md:items-center">
             <button
               type="submit"
-              className="rounded-2xl bg-[#27d7ff] px-6 py-3 font-semibold text-[#022033] shadow-[0_0_20px_rgba(39,215,255,0.30)]"
+              className="rounded-2xl bg-[#27d7ff] px-7 py-3 text-sm font-semibold text-[#022033] shadow-[0_0_20px_rgba(39,215,255,0.30)] transition hover:scale-[1.01]"
             >
-              Submit Agent Info
+              Submit
             </button>
 
-            <p className="text-sm leading-6 text-slate-400">
+            <p className="max-w-2xl text-sm leading-6 text-slate-400">
               After submission, the agent page will be created automatically and
               will also appear inside the admin dashboard.
             </p>
