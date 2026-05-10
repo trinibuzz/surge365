@@ -104,20 +104,21 @@ export async function approveAgentSubmission(id: number) {
     return;
   }
 
-await createAgentSubmission({
-  slug,
-  display_name: displayName,
-  initials: travelCompanyName,
-  phone: String(formData.get("phone") || "").trim(),
-  whatsapp: String(formData.get("whatsapp") || "").trim(),
-  sba_site_url: String(formData.get("sba_site_url") || "").trim(),
-  signup_site_url: String(formData.get("signup_site_url") || "").trim(),
-  booking_engine_url: String(formData.get("booking_engine_url") || "").trim(),
-  vortex_site_url: String(formData.get("vortex_site_url") || "").trim(),
-  biz_opp_video_url: String(formData.get("biz_opp_video_url") || "").trim(),
-  comp_plan_video_url: String(formData.get("comp_plan_video_url") || "").trim(),
-  powerline_video_url: String(formData.get("powerline_video_url") || "").trim(),
-});
+  await createAgent({
+    slug: submission.slug,
+    display_name: submission.display_name,
+    initials: submission.initials || "",
+    phone: submission.phone || "",
+    whatsapp: submission.whatsapp || "",
+    sba_site_url: submission.sba_site_url || "",
+    signup_site_url: submission.signup_site_url || "",
+    booking_engine_url: submission.booking_engine_url || "",
+    vortex_site_url: submission.vortex_site_url || "",
+    biz_opp_video_url: submission.biz_opp_video_url || "",
+    comp_plan_video_url: submission.comp_plan_video_url || "",
+    powerline_video_url: submission.powerline_video_url || "",
+    is_active: true,
+  });
 
   const [agentRows] = await db.query(
     `
