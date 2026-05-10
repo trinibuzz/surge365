@@ -20,21 +20,26 @@ export default async function AdminDashboardPage() {
               className="h-16 w-auto object-contain drop-shadow-[0_0_22px_rgba(28,213,255,0.42)]"
             />
 
-            <h1 className="mt-5 text-3xl font-semibold">
-              Agent Dashboard
-            </h1>
+            <h1 className="mt-5 text-3xl font-semibold">Agent Dashboard</h1>
 
             <p className="mt-2 text-sm text-slate-300">
               View and manage surge365 agent tap pages.
             </p>
           </div>
 
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3">
             <a
               href="/admin/agents/new"
               className="rounded-2xl bg-[#27d7ff] px-5 py-3 text-sm font-semibold text-[#022033] shadow-[0_0_18px_rgba(39,215,255,0.30)]"
             >
               Add Agent
+            </a>
+
+            <a
+              href="/admin/submissions"
+              className="rounded-2xl border border-yellow-300/25 px-5 py-3 text-sm font-semibold text-yellow-200 hover:bg-yellow-300/10"
+            >
+              Submissions
             </a>
 
             <form action="/api/admin/logout" method="POST">
@@ -57,6 +62,7 @@ export default async function AdminDashboardPage() {
 
           {agents.map((agent) => {
             const liveUrl = `/${agent.slug}`;
+            const badgeText = agent.initials || "A";
 
             return (
               <div
@@ -66,8 +72,8 @@ export default async function AdminDashboardPage() {
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                   <div>
                     <div className="flex items-center gap-3">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan-300/35 bg-cyan-300/10 text-lg font-semibold text-yellow-200">
-                        {agent.initials || "A"}
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-cyan-300/35 bg-cyan-300/10 px-1 text-center text-[10px] font-semibold leading-tight text-yellow-200">
+                        {badgeText}
                       </div>
 
                       <div>
