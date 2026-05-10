@@ -2,12 +2,12 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 import { redirect } from "next/navigation";
-import { createAgent } from "@/lib/adminAgents";
+import { createAgentSubmission } from "@/lib/agentSubmissions";
 
 type AgentSignupPageProps = {
   searchParams: Promise<{
     key?: string;
-    created?: string;
+    submitted?: string;
   }>;
 };
 
@@ -63,7 +63,7 @@ export default async function AgentSignupPage({
 }: AgentSignupPageProps) {
   const params = await searchParams;
   const key = params.key || "";
-  const createdSlug = params.created || "";
+  const submitted = params.submitted === "1";
 
   const validKey = process.env.AGENT_FORM_KEY;
   const isAllowed = Boolean(validKey) && key === validKey;
@@ -83,12 +83,13 @@ export default async function AgentSignupPage({
 
     const slug = makeSlug(rawSlug || displayName);
 
-    // This still saves into the existing "initials" column,
+    // This still saves into the existing "initials" style field,
     // but the form displays it as Travel Company Name.
     const travelCompanyName =
-      String(formData.get("initials") || "").trim() || makeInitials(displayName);
+      String(formData.get("initials") || "").trim() ||
+      makeInitials(displayName);
 
-    await createAgent({
+    await createAgentSubmission({
       slug,
       display_name: displayName,
       initials: travelCompanyName,
@@ -101,10 +102,9 @@ export default async function AgentSignupPage({
       biz_opp_video_url: String(formData.get("biz_opp_video_url") || "").trim(),
       comp_plan_video_url: String(formData.get("comp_plan_video_url") || "").trim(),
       powerline_video_url: String(formData.get("powerline_video_url") || "").trim(),
-      is_active: true,
     });
 
-    redirect(`/agent-signup?key=${submittedKey}&created=${slug}`);
+    redirect(`/agent-signup?key=${submittedKey}&submitted=1`);
   }
 
   if (!isAllowed) {
@@ -150,31 +150,23 @@ export default async function AgentSignupPage({
             </h1>
 
             <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-slate-300">
-              Fill out the information below to create your tap-card landing
-              page. Once submitted, your page will be created and can be updated
-              by the admin if needed.
+              Fill out the information below to submit your tap-card landing
+              page details. Your page will be reviewed and activated after
+              payment is confirmed.
             </p>
           </div>
         </div>
 
-        {createdSlug && (
+        {submitted && (
           <div className="mt-6 rounded-[2rem] border border-green-400/25 bg-green-500/10 p-6 shadow-[0_0_40px_rgba(34,197,94,0.12)]">
             <h2 className="text-2xl font-semibold text-green-300">
-              Agent page created successfully.
+              Submission received.
             </h2>
 
-            <p className="mt-2 text-sm text-slate-300">
-              The new page is ready here:
+            <p className="mt-2 text-sm leading-6 text-slate-300">
+              Thank you. Your information has been submitted successfully. Your
+              tap-card page will be activated after payment is confirmed.
             </p>
-
-            <a
-              href={`/${createdSlug}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 inline-flex rounded-2xl bg-[#27d7ff] px-5 py-3 font-semibold text-[#022033] shadow-[0_0_20px_rgba(39,215,255,0.30)]"
-            >
-              View /{createdSlug}
-            </a>
           </div>
         )}
 
@@ -292,8 +284,8 @@ export default async function AgentSignupPage({
             </button>
 
             <p className="max-w-2xl text-sm leading-6 text-slate-400">
-              After submission, the agent page will be created automatically and
-              will also appear inside the admin dashboard.
+              After submission, your information will be sent for review. The
+              tap-card page will only be activated after payment is confirmed.
             </p>
           </div>
         </form>
