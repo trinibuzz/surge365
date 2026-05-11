@@ -151,3 +151,24 @@ export async function createAgent(data: {
     ]
   );
 }
+
+export async function setAgentActiveStatus(id: number, isActive: boolean) {
+  await db.query(
+    `
+    UPDATE agents
+    SET is_active = ?
+    WHERE id = ?
+    `,
+    [isActive, id]
+  );
+}
+
+export async function deleteAgentById(id: number) {
+  await db.query(
+    `
+    DELETE FROM agents
+    WHERE id = ?
+    `,
+    [id]
+  );
+}

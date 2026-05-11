@@ -1,13 +1,60 @@
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/adminAuth";
-import { getAllAgents } from "@/lib/adminAgents";
+import {
+  deleteAgentById,
+  getAllAgents,
+  setAgentActiveStatus,
+} from "@/lib/adminAgents";
 
 export default async function AdminDashboardPage() {
   await requireAdmin();
 
   const agents = await getAllAgents();
+
+  async function deactivateAgent(formData: FormData) {
+    "use server";
+
+    await requireAdmin();
+
+    const id = Number(formData.get("id"));
+
+    if (id) {
+      await setAgentActiveStatus(id, false);
+    }
+
+    redirect("/admin");
+  }
+
+  async function activateAgent(formData: FormData) {
+    "use server";
+
+    await requireAdmin();
+
+    const id = Number(formData.get("id"));
+
+    if (id) {
+      await setAgentActiveStatus(id, true);
+    }
+
+    redirect("/admin");
+  }
+
+  async function deleteAgent(formData: FormData) {
+    "use server";
+
+    await requireAdmin();
+
+    const id = Number(formData.get("id"));
+
+    if (id) {
+      await deleteAgentById(id);
+    }
+
+    redirect("/admin");
+  }
 
   return (
     <main className="min-h-screen bg-[#010714] px-4 py-8 text-white">
@@ -63,6 +110,7 @@ export default async function AdminDashboardPage() {
           {agents.map((agent) => {
             const liveUrl = `/${agent.slug}`;
             const badgeText = agent.initials || "A";
+            const isActive = Boolean(agent.is_active);
 
             return (
               <div
@@ -101,26 +149,32 @@ export default async function AdminDashboardPage() {
                         <span className="text-slate-500">Status:</span>{" "}
                         <span
                           className={
-                            agent.is_active
-                              ? "text-green-300"
-                              : "text-red-300"
+                            isActive ? "text-green-300" : "text-red-300"
                           }
                         >
-                          {agent.is_active ? "Active" : "Inactive"}
+                          {isActive ? "Active" : "Inactive"}
                         </span>
                       </p>
                     </div>
                   </div>
 
                   <div className="flex flex-wrap gap-3">
-                    <a
-                      href={liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="rounded-2xl border border-cyan-300/20 px-4 py-2 text-sm font-semibold text-cyan-200 hover:bg-cyan-300/10"
-                    >
-                      View Page
-                    </a>
+                    {isActive && (
+                      <a
+                        href={liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-2xl border border-cyan-300/20 px-4 py-2 text-sm font-semibold text-cyan-200 hover:bg-cyan-300/10"
+                      >
+                        View Page
+                      </a>
+                    )}
+
+                    {!isActive && (
+                      <span className="rounded-2xl border border-red-400/20 px-4 py-2 text-sm font-semibold text-red-200">
+                        Page Off
+                      </span>
+                    )}
 
                     <a
                       href={`/admin/agents/${agent.id}/edit`}
@@ -128,6 +182,38 @@ export default async function AdminDashboardPage() {
                     >
                       Edit
                     </a>
+
+                    {isActive ? (
+                      <form action={deactivateAgent}>
+                        <input type="hidden" name="id" value={agent.id} />
+                        <button
+                          type="submit"
+                          className="rounded-2xl border border-yellow-300/25 px-4 py-2 text-sm font-semibold text-yellow-200 hover:bg-yellow-300/10"
+                        >
+                          Deactivate
+                        </button>
+                      </form>
+                    ) : (
+                      <form action={activateAgent}>
+                        <input type="hidden" name="id" value={agent.id} />
+                        <button
+                          type="submit"
+                          className="rounded-2xl border border-green-400/25 px-4 py-2 text-sm font-semibold text-green-200 hover:bg-green-500/10"
+                        >
+                          Activate
+                        </button>
+                      </form>
+                    )}
+
+                    <form action={deleteAgent}>
+                      <input type="hidden" name="id" value={agent.id} />
+                      <button
+                        type="submit"
+                        className="rounded-2xl border border-red-400/30 px-4 py-2 text-sm font-semibold text-red-200 hover:bg-red-500/10"
+                      >
+                        Delete
+                      </button>
+                    </form>
                   </div>
                 </div>
               </div>
