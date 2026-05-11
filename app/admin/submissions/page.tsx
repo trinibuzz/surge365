@@ -95,7 +95,7 @@ export default async function AdminSubmissionsPage() {
                 <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan-300/35 bg-cyan-300/10 text-sm font-semibold text-yellow-200">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-cyan-300/35 bg-cyan-300/10 px-1 text-center text-[10px] font-semibold leading-tight text-yellow-200">
                         {submission.initials || "AG"}
                       </div>
 
@@ -220,14 +220,25 @@ export default async function AdminSubmissionsPage() {
                     )}
 
                     {isApproved && (
-                      <a
-                        href={`/${submission.slug}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="rounded-2xl border border-green-400/30 px-4 py-2 text-sm font-semibold text-green-200 hover:bg-green-500/10"
-                      >
-                        View Live Page
-                      </a>
+                      <>
+                        <a
+                          href={`/${submission.slug}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="rounded-2xl border border-green-400/30 px-4 py-2 text-sm font-semibold text-green-200 hover:bg-green-500/10"
+                        >
+                          View Live Page
+                        </a>
+
+                        {submission.created_agent_id && (
+                          <a
+                            href={`/admin/agents/${submission.created_agent_id}/edit`}
+                            className="rounded-2xl bg-[#27d7ff] px-4 py-2 text-sm font-semibold text-[#022033] shadow-[0_0_18px_rgba(39,215,255,0.25)]"
+                          >
+                            Edit Live Agent
+                          </a>
+                        )}
+                      </>
                     )}
 
                     {isRejected && (
