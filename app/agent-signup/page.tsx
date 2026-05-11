@@ -26,13 +26,13 @@ function Field({
 }) {
   return (
     <div>
-      <label className="text-sm font-medium text-slate-200">{label}</label>
+      <label className="text-sm font-medium text-slate-100">{label}</label>
       <input
         name={name}
         type={type}
         placeholder={placeholder}
         required={required}
-        className="mt-2 w-full rounded-2xl border border-cyan-300/15 bg-black/25 px-4 py-3 text-white outline-none placeholder:text-slate-500 focus:border-cyan-300/50"
+        className="mt-2 w-full rounded-xl border border-cyan-300/20 bg-[#031323]/80 px-4 py-3 text-white outline-none placeholder:text-slate-500 focus:border-cyan-300/70 focus:shadow-[0_0_18px_rgba(39,215,255,0.18)]"
       />
     </div>
   );
@@ -83,8 +83,6 @@ export default async function AgentSignupPage({
 
     const slug = makeSlug(rawSlug || displayName);
 
-    // This still saves into the existing "initials" style field,
-    // but the form displays it as Travel Company Name.
     const travelCompanyName =
       String(formData.get("initials") || "").trim() ||
       makeInitials(displayName);
@@ -130,165 +128,161 @@ export default async function AgentSignupPage({
   }
 
   return (
-    <main className="min-h-screen bg-[#010714] px-4 py-8 text-white">
-      <section className="mx-auto max-w-5xl">
-        {/* Header card */}
-        <div className="relative overflow-hidden rounded-[2rem] border border-cyan-300/15 bg-[#061a2e] p-6 shadow-[0_0_50px_rgba(28,213,255,0.12)]">
-          <div className="pointer-events-none absolute left-1/2 top-[-90px] h-56 w-56 -translate-x-1/2 rounded-full bg-cyan-300/10 blur-3xl" />
+    <main className="min-h-screen bg-[#010714] px-4 py-6 text-white">
+      <section className="mx-auto max-w-6xl">
+        {/* HERO BANNER */}
+        <div className="overflow-hidden rounded-[2rem] border border-cyan-300/20 bg-[#061a2e] p-2 shadow-[0_0_60px_rgba(28,213,255,0.18)]">
+          <div className="relative h-[260px] overflow-hidden rounded-[1.6rem] md:h-[390px]">
+            <img
+              src="/agent-form-hero.png"
+              alt="Surge365 travel agent form"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
 
-          <div className="relative text-center">
-            <div className="mx-auto flex h-28 w-28 items-center justify-center rounded-full border border-cyan-300/20 bg-black/25 shadow-[0_0_30px_rgba(28,213,255,0.18)]">
-              <img
-                src="/surge-logo.png"
-                alt="Surge Three Sixty Five"
-                className="h-16 w-auto object-contain drop-shadow-[0_0_22px_rgba(28,213,255,0.45)]"
-              />
-            </div>
-
-            <h1 className="mt-6 text-3xl font-semibold tracking-tight md:text-4xl">
-              Agent Information Form
-            </h1>
-
-            <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-slate-300">
-              Fill out the information below to submit your tap-card landing
-              page details. Your page will be reviewed and activated after
-              payment is confirmed.
-            </p>
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#010714]/30" />
           </div>
         </div>
 
-        {submitted && (
-          <div className="mt-6 rounded-[2rem] border border-green-400/25 bg-green-500/10 p-6 shadow-[0_0_40px_rgba(34,197,94,0.12)]">
-            <h2 className="text-2xl font-semibold text-green-300">
-              Submission received.
-            </h2>
+        {/* FORM CARD */}
+        <div className="relative mt-8 overflow-hidden rounded-[2.2rem] border border-yellow-300/25 bg-[#05182d]/95 p-5 shadow-[0_0_70px_rgba(28,213,255,0.14)] md:p-8">
+          <div className="pointer-events-none absolute left-1/2 top-[-120px] h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-300/16 blur-3xl" />
+          <div className="pointer-events-none absolute bottom-[-160px] right-[-120px] h-80 w-80 rounded-full bg-yellow-300/10 blur-3xl" />
 
-            <p className="mt-2 text-sm leading-6 text-slate-300">
-              Thank you. Your information has been submitted successfully. Your
-              tap-card page will be activated after payment is confirmed.
+          <div className="relative text-center">
+            <h1 className="font-serif text-3xl font-semibold tracking-tight text-white md:text-5xl">
+              Agent Information Form
+            </h1>
+
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-slate-300 md:text-base">
+              Complete the form below to submit your travel agent details for
+              review.
             </p>
+
+            <div className="mx-auto mt-6 flex max-w-xl items-center gap-4 rounded-2xl border border-yellow-300/25 bg-black/20 p-4 text-left shadow-[0_0_30px_rgba(212,175,55,0.10)]">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-yellow-300/40 bg-yellow-300/10 text-2xl">
+                🛡️
+              </div>
+
+              <p className="text-sm font-medium leading-6 text-yellow-100 md:text-base">
+                Your page will be reviewed and activated after payment
+                confirmation.
+              </p>
+            </div>
           </div>
-        )}
 
-        <form
-          action={submitAgentForm}
-          className="mt-6 rounded-[2rem] border border-cyan-300/15 bg-[#061a2e] p-6 shadow-[0_0_50px_rgba(28,213,255,0.10)]"
-        >
-          <input type="hidden" name="key" value={key} />
+          {submitted && (
+            <div className="relative mt-6 rounded-[2rem] border border-green-400/25 bg-green-500/10 p-6 shadow-[0_0_40px_rgba(34,197,94,0.12)]">
+              <h2 className="text-2xl font-semibold text-green-300">
+                Submission received.
+              </h2>
 
-          <div className="rounded-[1.5rem] border border-cyan-300/10 bg-black/15 p-5">
-            <h2 className="text-xl font-semibold">Agent Details</h2>
-            <p className="mt-1 text-sm text-slate-400">
-              This information appears at the top of the agent page.
-            </p>
+              <p className="mt-2 text-sm leading-6 text-slate-300">
+                Thank you. Your information has been submitted successfully.
+                Your tap-card page will be activated after payment is confirmed.
+              </p>
+            </div>
+          )}
 
-            <div className="mt-5 grid gap-5 md:grid-cols-2">
+          <form action={submitAgentForm} className="relative mt-8">
+            <input type="hidden" name="key" value={key} />
+
+            <div className="grid gap-x-7 gap-y-5 md:grid-cols-2">
               <Field
                 label="Full Name"
                 name="display_name"
-                placeholder="Example: Maria Joseph"
+                placeholder="Enter your full name"
                 required
-              />
-
-              <Field
-                label="Page Name / Slug"
-                name="slug"
-                placeholder="Example: maria"
               />
 
               <Field
                 label="Travel Company Name"
                 name="initials"
-                placeholder="Example: NPSTravel"
+                placeholder="Enter your travel company name"
               />
 
               <Field
-                label="Phone Number"
+                label="Page Name / Slug"
+                name="slug"
+                placeholder="Enter page name or slug no spaces"
+              />
+
+              <Field
+                label="Phone"
                 name="phone"
-                placeholder="Example: 868-000-0000"
+                placeholder="Enter your phone number"
               />
 
               <Field
-                label="WhatsApp Number"
+                label="WhatsApp"
                 name="whatsapp"
-                placeholder="Example: 18680000000"
+                placeholder="Enter your WhatsApp number"
               />
-            </div>
-          </div>
 
-          <div className="mt-6 rounded-[1.5rem] border border-cyan-300/10 bg-black/15 p-5">
-            <h2 className="text-xl font-semibold">Travel Links</h2>
-
-            <p className="mt-1 text-sm text-slate-400">
-              Paste the official links you want displayed on the tap-card page.
-            </p>
-
-            <div className="mt-5 grid gap-5">
               <Field
                 label="SBA Site URL"
                 name="sba_site_url"
-                placeholder="Paste SBA Site link"
+                placeholder="https://your-sba-site.com"
                 type="url"
               />
 
               <Field
                 label="Signup Site URL"
                 name="signup_site_url"
-                placeholder="Paste Signup Site link"
+                placeholder="https://your-signup-site.com"
                 type="url"
               />
 
               <Field
                 label="Booking Engine URL"
                 name="booking_engine_url"
-                placeholder="Paste Booking Engine link"
+                placeholder="https://your-booking-engine.com"
                 type="url"
               />
 
               <Field
                 label="Vortex Site URL"
                 name="vortex_site_url"
-                placeholder="Paste Vortex Site link"
+                placeholder="https://your-vortex-site.com"
                 type="url"
               />
 
               <Field
                 label="Biz Opp Video URL"
                 name="biz_opp_video_url"
-                placeholder="Paste Biz Opp Video link"
+                placeholder="https://youtube.com/watch?v=yourvideo"
                 type="url"
               />
 
               <Field
                 label="Comp Plan Video URL"
                 name="comp_plan_video_url"
-                placeholder="Paste Comp Plan Video link"
+                placeholder="https://youtube.com/watch?v=yourvideo"
                 type="url"
               />
 
               <Field
                 label="Powerline Video URL"
                 name="powerline_video_url"
-                placeholder="Paste Powerline Video link"
+                placeholder="https://youtube.com/watch?v=yourvideo"
                 type="url"
               />
             </div>
-          </div>
 
-          <div className="mt-8 flex flex-col items-start gap-3 md:flex-row md:items-center">
-            <button
-              type="submit"
-              className="rounded-2xl bg-[#27d7ff] px-7 py-3 text-sm font-semibold text-[#022033] shadow-[0_0_20px_rgba(39,215,255,0.30)] transition hover:scale-[1.01]"
-            >
-              Submit
-            </button>
+            <div className="mt-8 flex justify-center">
+              <button
+                type="submit"
+                className="min-w-[220px] rounded-full bg-gradient-to-r from-cyan-300 to-[#11bde8] px-8 py-3 text-base font-semibold text-[#022033] shadow-[0_0_28px_rgba(39,215,255,0.35)] transition hover:scale-[1.02]"
+              >
+                Submit
+              </button>
+            </div>
 
-            <p className="max-w-2xl text-sm leading-6 text-slate-400">
+            <p className="mx-auto mt-5 max-w-2xl text-center text-sm leading-6 text-slate-400">
               After submission, your information will be sent for review. The
               tap-card page will only be activated after payment is confirmed.
             </p>
-          </div>
-        </form>
+          </form>
+        </div>
       </section>
     </main>
   );
