@@ -160,14 +160,23 @@ export default async function AdminDashboardPage() {
 
                   <div className="flex flex-wrap gap-3">
                     {isActive && (
-                      <a
-                        href={liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="rounded-2xl border border-cyan-300/20 px-4 py-2 text-sm font-semibold text-cyan-200 hover:bg-cyan-300/10"
-                      >
-                        View Page
-                      </a>
+                      <>
+                        <a
+                          href={liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="rounded-2xl border border-cyan-300/20 px-4 py-2 text-sm font-semibold text-cyan-200 hover:bg-cyan-300/10"
+                        >
+                          View Page
+                        </a>
+
+                        <a
+                          href={`/admin/agents/${agent.id}/qr`}
+                          className="rounded-2xl border border-yellow-300/25 px-4 py-2 text-sm font-semibold text-yellow-200 hover:bg-yellow-300/10"
+                        >
+                          QR Code
+                        </a>
+                      </>
                     )}
 
                     {!isActive && (
